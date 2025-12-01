@@ -11,7 +11,7 @@ y3 = 0.5 * s + 3
 #--------------------------------------------------------------------
 #determine the jacobian
 
-dy1_dtheta1  =   sp.diff(y1, theta1)
+dy1_dtheta1  =  sp.diff(y1, theta1)
 dy2_dtheta1 =   sp.diff(y2, theta1)
 dy3_dtheta1 =   sp.diff(y3, theta1)
 dy1_dtheta2 =   sp.diff(y1, theta2)
