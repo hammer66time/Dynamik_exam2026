@@ -80,5 +80,15 @@ def compute_velotity_for_c():
     print("a_c2 =", a_c2_num)
     print("------------------------------------------------")
 
-compute_velotity_for_c()
+def calculate_theta():
+    t = 0.1
 
+    theta1 = 3 * sp.sin(3.14 * t + 1.1)
+    theta2 = 2 * sp.sin(3.14 * t + 0.4)
+    
+    print(theta1)
+    print(theta2)
+
+#compute_velotity_for_c()
+#compute_for_joints()
+calculate_theta()
