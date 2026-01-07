@@ -16,17 +16,17 @@ import math as m
 # roll (x): rotation omkring x-aksen
 # pitch (y): rotation omkring y-aksen  
 # yaw (z): rotation omkring z-aksen
-x, y, z = np.deg2rad([5, 0, 45])  # roll, pitch, yaw
+x, y, z = np.deg2rad([30, 5, 3])  # roll, pitch, yaw
 
 # Rotorkræfter i lokal koordinatsystem [Fx, Fy, Fz] (N)
 # Antaget at rotorerne kun genererer kraft i z-retning
 f_1 = np.array([[0],[0],[10]])  # Rotor 1
 f_2 = np.array([[0],[0],[25]])  # Rotor 2
-f_3 = np.array([[0],[0],[5]])   # Rotor 3
-f_4 = np.array([[0],[0],[30]])  # Rotor 4
+f_3 = np.array([[0],[0],[10]])   # Rotor 3
+f_4 = np.array([[0],[0],[20]])  # Rotor 4
 
 # Dronens masse (kg)
-drone_mass = 6
+drone_mass = 4
 
 # Afstand fra massecentrum til hver rotor (m)
 L = 0.4
@@ -36,7 +36,7 @@ L = 0.4
 p = np.array([[6], [-3], [-30]])
 
 # Vinkelhastighed i globalt koordinatsystem [wx, wy, wz] (rad/s)
-omega = np.array([0.1, 0.1, 0.7])
+omega = np.array([0.1, 0.5, 0.1])
 
 # ============================================================================
 # FUNKTIONER
@@ -122,9 +122,9 @@ def calculate_global_inertia(R):
     # Lokal inertitensor (symmetrisk, diagonal for symmetrisk drone)
     # Ixx, Iyy: inertimoment omkring x og y akser
     # Izz: inertimoment omkring z-aksen (lodret)
-    I_local = np.array([[4, 0, 0],
-                        [0, 4, 0],
-                        [0, 0, 2]])
+    I_local = np.array([[3, 0, 0],
+                        [0, 3, 0],
+                        [0, 0, 1]])
     
     # Transformer til globalt koordinatsystem
     I = R @ I_local @ R_t
@@ -245,13 +245,13 @@ def total_torque(R, f1, f2, f3, f4, L):
 # ============================================================================
 
 # 1. Beregn rotationsmatrice (Z-Y-X konvention)
-R = derive_rotation_matrix(x, y, z, False)
+R = derive_rotation_matrix(x, y, z, True)
 
 # 2. Beregn global inertitensor
 I_global = calculate_global_inertia(R)
 
 # 3. Beregn total kraft (inkl. payload)
-F_total = total_force(R, f_1, f_2, f_3, f_4, drone_mass, p)
+F_total = total_force(R, f_1, f_2, f_3, f_4, drone_mass, None)
 
 # 4. Beregn totalt moment
 tau_global = total_torque(R, f_1, f_2, f_3, f_4, L)
